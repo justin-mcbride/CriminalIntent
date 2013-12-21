@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CriminalIntent</string>
+    <string name="crime_title_hint">Enter a title for the crime.</string>
+    <string name="crime_title_label">Title</string>
+    <string name="crime_details_label">Details</string>
+    <string name="crime_solved_label">Solved?</string>
+    <string name="crimes_title">Crimes</string>
+    <string name="date_picker_title">Date of crime:</string>
+    <string name="time_picker_title">Time of crimes:</string>
+    <string name="dialog_editDate">Date</string>
+    <string name="dialog_editTime">Time</string>
+    <string name="dialog_editDateOrTime">Do you want to edit the date or time?</string>
+
+    <string name="new_crime">New Crime</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle">If you see something, say something.</string>
+    <string name="delete_crime">Delete</string>
+
+
+    <string name="no_items">No items to view right now.\nCreate one now.</string>
+    <string name="take">Take!</string>
+</resources>
