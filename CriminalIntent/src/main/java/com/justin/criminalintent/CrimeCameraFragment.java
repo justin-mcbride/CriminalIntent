@@ -37,8 +37,7 @@ public class CrimeCameraFragment extends Fragment {
 
         mSurfaceView = (SurfaceView)v.findViewById(R.id.crime_camera_surfaceview);
         SurfaceHolder holder = mSurfaceView.getHolder();
-
-
+        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         return v;
     }
 
