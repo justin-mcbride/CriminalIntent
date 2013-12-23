@@ -168,7 +168,7 @@ public class CrimeCameraFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
+        Log.d(TAG, "crimecamerafragment.onpause()");
         if (mCamera != null) {
             mCamera.release();
             mCamera = null;
