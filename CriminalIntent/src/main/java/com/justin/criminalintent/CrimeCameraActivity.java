@@ -9,6 +9,7 @@ import android.view.WindowManager;
  * Created by Justin on 12/21/13.
  */
 public class CrimeCameraActivity extends SingleFragmentActivity {
+
     @Override
     protected Fragment createFragment() {
         return new CrimeCameraFragment();

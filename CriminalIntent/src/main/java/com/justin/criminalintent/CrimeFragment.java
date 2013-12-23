@@ -37,10 +37,13 @@ import java.util.UUID;
  */
 public class CrimeFragment extends Fragment {
 
+    private static final String TAG = "CrimeFragment";
+
     public static final String EXTRA_CRIME_ID = "com.justin.criminalintent.crime_id";
     private static final int REQUEST_DATE = 0xff;
     private static final int REQUEST_TIME = 0xfe;
     private static final int REQUEST_CHOICE = 0xfd;
+    private static final int REQUEST_PHOTO = 0xfc;
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -137,7 +140,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), CrimeCameraActivity.class);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_PHOTO);
             }
         });
 
@@ -191,6 +194,14 @@ public class CrimeFragment extends Fragment {
             }
             if (choice == ChoiceDialogFragment.CHOICE_TIME) editTimeDialog();
             else if (choice == ChoiceDialogFragment.CHOICE_DATE) editDateDialog();
+        }
+
+        if (requestCode == REQUEST_PHOTO) {
+            // create a new photo object and attach it to the crime
+            String filename = data.getStringExtra(CrimeCameraFragment.EXTRA_PHOTO_FILENAME);
+            if (filename != null) {
+                Log.i(TAG, "filename: " + filename);
+            }
         }
     }
 
