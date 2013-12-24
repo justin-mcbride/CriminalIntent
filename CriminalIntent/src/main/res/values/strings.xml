@@ -20,6 +20,9 @@
     <string name="delete_crime">Delete</string>
     <string name="delete_photo">Delete Photo</string>
 
+    <string name="crime_suspect">Choose Suspect</string>
+    <string name="crime_report">Send Crime Report</string>
+
 
     <string name="no_items">No items to view right now.\nCreate one now.</string>
     <string name="take">Take!</string>

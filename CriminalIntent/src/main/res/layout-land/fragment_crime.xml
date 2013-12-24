@@ -63,7 +63,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp">
 
@@ -80,6 +80,26 @@
             android:text="@string/crime_solved_label"
             android:layout_weight="1"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Other Stuff"
+        style="?android:listSeparatorTextViewStyle"/>
+
+    <Button android:id="@+id/crime_suspect_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/crime_suspect"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"/>
+
+    <Button android:id="@+id/crime_report_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/crime_report"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"/>
 
 
 </LinearLayout>
