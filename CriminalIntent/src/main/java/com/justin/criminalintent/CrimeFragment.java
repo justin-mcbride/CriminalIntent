@@ -2,6 +2,7 @@ package com.justin.criminalintent;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -68,6 +71,11 @@ public class CrimeFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime, menu);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getActivity().getMenuInflater().inflate(R.menu.crime_fragment_context, menu);
     }
 
     @Override
@@ -161,6 +169,46 @@ public class CrimeFragment extends Fragment {
                 ImageFragment.newInstance(path).show(fm, DIALOG_IMAGE);
             }
         });
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) registerForContextMenu(mPhotoView);
+        else {
+            final ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+                @Override
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    mode.getMenuInflater().inflate(R.menu.crime_fragment_context, menu);
+                    return true;
+                }
+
+                @Override
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                @Override
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.crime_fragment_delete_photo:
+                            deletePhoto();
+                            mode.finish();
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+
+                @Override
+                public void onDestroyActionMode(ActionMode mode) {
+
+                }
+            };
+
+            mPhotoView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    getActivity().startActionMode(actionModeCallback);
+                    return true;
+                }
+            });
+        }
 
         //if camera is not available, disable camera functionality
         PackageManager pm = getActivity().getPackageManager();
@@ -173,6 +221,7 @@ public class CrimeFragment extends Fragment {
 
         return v;
     }
+
 
     private void editDateTimeDialog() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -219,6 +268,7 @@ public class CrimeFragment extends Fragment {
             String filename = data.getStringExtra(CrimeCameraFragment.EXTRA_PHOTO_FILENAME);
             if (filename != null) {
                 Photo p = new Photo(filename);
+                deletePhoto();
                 mCrime.setPhoto(p);
                 showPhoto();
             }
@@ -238,7 +288,16 @@ public class CrimeFragment extends Fragment {
         dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
         dialog.show(fm, null);
     }
+    private boolean deletePhoto() {
+        if (mCrime.getPhoto() == null) return false;
 
+        String path = getActivity().getFileStreamPath(mCrime.getPhoto().getFilename()).getAbsolutePath();
+        File f = new File(path);
+        f.delete();
+        mCrime.setPhoto(null);
+        PictureUtils.cleanImageView(mPhotoView);
+        return true;
+    }
 
     private void combineTime(Date time) {
         Calendar cal = Calendar.getInstance();

@@ -3,6 +3,8 @@ package com.justin.criminalintent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 /**
  * Created by Justin on 12/22/13.
  */
