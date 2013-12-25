@@ -90,7 +90,7 @@
     <Button android:id="@+id/crime_report_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/crime_report"
+        android:text="@string/crime_report_button"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"/>
 
