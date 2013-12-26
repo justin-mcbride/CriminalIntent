@@ -42,6 +42,7 @@ import java.util.UUID;
  * Created by Justin on 11/22/13.
  */
 public class CrimeFragment extends Fragment {
+    private Callbacks mCallbacks;
 
     private static final String TAG = "CrimeFragment";
 
@@ -62,6 +63,22 @@ public class CrimeFragment extends Fragment {
     private ImageView mPhotoView;
     private Button mSuspectButton;
     private Button mCallButton;
+
+    public interface Callbacks {
+        void onCrimeUpdated(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks)activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,6 +143,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                 mCrime.setTitle(charSequence.toString());
+                mCallbacks.onCrimeUpdated(mCrime);
             }
 
             @Override
@@ -149,6 +167,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mCrime.setSolved(b);
+                mCallbacks.onCrimeUpdated(mCrime);
             }
         });
 
@@ -412,6 +431,7 @@ public class CrimeFragment extends Fragment {
 
     private void updateDate() {
         mDateButton.setText(mCrime.getDateString());
+        mCallbacks.onCrimeUpdated(mCrime);
     }
 
     public CrimeFragment() {
